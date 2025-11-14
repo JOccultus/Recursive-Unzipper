@@ -1,6 +1,7 @@
 # 49 66 20 69 74 20 77 6f 72 6b 73 2c 20 4a 6f 65 20 70 72 6f 62 61 62 6c 79 20 77 72 6f 74 65 20 69 74 2e 20 49 66 20 69 74 20 64 6f 65 73 6e 27 74 20 77 6f 72 6b 2c 20 4a 6f 65 20 64 65 66 69 6e 69 74 65 6c 79 20 77 72 6f 74 65 20 69 74 2e
 
 # RECURSIVE UNZIPPER
+
 # imports
 import io # for opening nested ZIP bytes as files
 import json # for creating extraction map
@@ -76,8 +77,8 @@ class ZipExtractorApp: # GUI
         Creates background thread for extraction.
 
         Arguments:
-        zip_path {Path} -- filepath of main ZIP archive
-        dest_root {Path} -- path of extracted folder
+            zip_path {Path} -- filepath of main ZIP archive
+            dest_root {Path} -- path of extracted folder
         """
         mapping = {} # dictionary to hold mapping of original to extracted path mappings
         # extract files
@@ -118,10 +119,10 @@ def scan_zip(zf: zipfile.ZipFile) -> int:
     Helper function; count extractable regular files inside of ZIP archive including files inside nested ZIPs.
 
     Arguments:
-    zf {ZipFile} -- main ZIP archive
+        zf {ZipFile} -- main ZIP archive
 
     Returns:
-    total {int} -- total number of regular files found across entire archive including nested archives
+        total {int} -- total number of regular files found across entire archive including nested archives
     """
     total = 0 # variable to track number of zip files found
     for info in zf.infolist(): # loop through every entry in ZIP archive
@@ -141,10 +142,10 @@ def make_unique_path(path: Path) -> Path:
     Helper function; returns path or a new Path with ' (n)' appended before full suffixes if exists to avoid overwriting on collision.
 
     Arguments:
-    path {Path} -- current path candidate.
+        path {Path} -- current path candidate.
 
     Returns:
-    candidate {Path} -- final path candidate.
+        candidate {Path} -- final path candidate.
     """
     # return original path immediately if safe
     if not path.exists():
@@ -207,11 +208,11 @@ def extract_zip(zf, dest_root, rel_root, progress_q, mapping):
     Core function; extracts the ZIP files.
 
     Arguments:
-    zf {ZipFile} -- open Zip archive
-    dest_root {Path} -- location for files to be extracted to
-    rel_root {PurePosixPath} -- relative path prefix for mapping and nesting
-    progress_q {queue} -- signal progress to GUI
-    mapping {dict} -- holds mapping of original files to extracted files
+        zf {ZipFile} -- open Zip archive
+        dest_root {Path} -- location for files to be extracted to
+        rel_root {PurePosixPath} -- relative path prefix for mapping and nesting
+        progress_q {queue} -- signal progress to GUI
+        mapping {dict} -- holds mapping of original files to extracted files
     """
     for info in zf.infolist(): # loop through each entry in the ZIP
         name = info.filename # get member path as POSIX
